@@ -16,8 +16,30 @@ This is a simple file server app built with [ASP.NET Core](https://dotnet.micros
 This application's backend is written in C#. Frontend is written using [Vue.js](https://vuejs.org) framework.
 
 File Program.cs is used to initialize the web host builder and build the application.
+
 File Startup.cs is used to configure the application on startup.
+
 File Handlers.cs contains 2 request delegates:
 - DefaultGet - default fallback delegate
 - FileServer - get a file or directory info depending on request path.
+
 File index.html is the only frontend file. It contains all necessary markup, styles and script. 
+
+## License 
+
+MIT LICENSE: you can do whatever you want with this project.
+
+## Contributing
+
+Idk, just open a pull request...
+
+## Authors
+
+```
+{
+  "name": "Dmitriy Naumov",
+  "last-contribution-date": "2022-01-19",
+  "github": "https://github.com/dmitriynaumov1024",
+  "email": "naumov1024@gmail.com"
+}
+```
