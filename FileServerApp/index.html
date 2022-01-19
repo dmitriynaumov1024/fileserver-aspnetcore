@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Index</title>
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+    * {
+        box-sizing: border-box;
+        font-family: monospace;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background-color: #fbfbfb;
+    }
+
+    html {
+        display: flow-root;
+    }
+
+    ul, ol {
+        margin: 0;
+        padding-left: 1em;
+    }
+
+    li {
+        list-style-type: none;
+    }
+
+    .item-dir {
+        font-weight: bold;
+        color: #4444ab;
+        cursor: pointer;
+    }
+
+    .item-file {
+        font-weight: normal;
+        color: #101010;
+    }
+
+    .item-dir, .item-file {
+        text-decoration: none;
+        padding: 4px 10px;
+        border-radius: 4px;
+        display: block;
+        transition-duration: 0.3s;
+    }
+
+    .item-dir:hover, .item-file:hover {
+        background-color: #d5e0fe;
+    }
+
+    @media screen and (min-width: 4.50in) {
+        body>main {
+            width: max(4.40in, 60%);
+            margin: 3em auto;
+            padding: 2em;
+            border: 1px solid #dededf;
+            border-radius: 8px;
+            box-shadow: 0 0 10px 1px rgb(100 100 100 / 20%);
+            background-color: #fefefe;
+        }
+    }
+
+    @media screen and (max-width: 4.49in) {
+        body {
+            background-color: #fefefe;
+        }
+
+        body>main {
+            width: 100%;
+            padding: 0.5em;
+        }
+    }
+    </style>
+</head>
+<body>
+    <main id="main">
+        <p>Base: {{base}}</p>
+        <ul>
+            <li>
+                <span class="item-dir" @click="goToParent()">..</span>
+            </li>
+            <li v-for="dir in dirs">
+                <span class="item-dir" @click="goToDir(dir)">{{dir}}</span>
+            </li>
+        </ul>
+        <ul>
+            <li v-for="file in files">
+                <a :href="(dirUrlPrefix + base + file)" target="blank" class="item-file">{{file}}</a>
+            </li>
+        </ul>
+    </main>
+    <script type="text/javascript">
+    // Boilerplate
+    function beginHttpGet (url, success, fail = null) {
+        var http = new XMLHttpRequest();
+        http.open("GET", url);
+        http.onreadystatechange = function() {
+            if (http.readyState == XMLHttpRequest.DONE) {
+                if (http.status >= 200 && http.status < 300) {
+                    success(http);
+                }
+                else {
+                    fail(http);
+                }
+            }
+        };
+        http.send();
+    }
+
+    var app = new Vue({
+        el: "#main",
+        data: {
+            dirUrlPrefix: "/fs?path=",
+            parent: "",
+            base: "",
+            dirs: [],
+            files: []
+        },
+        methods: {
+            goTo: function(dirName){
+                var url = this.dirUrlPrefix + dirName;
+                console.log(url);
+                var capturedThis = this;
+                beginHttpGet(url, function(http){
+                    var response = (http.responseType == "json") ? 
+                        http.response : JSON.parse(http.response);
+                    console.log(response);
+                    capturedThis.base = response["base"];
+                    capturedThis.dirs = response["dirs"];
+                    capturedThis.files = response["files"];
+                    capturedThis.parent = response["parent"];
+                    capturedThis.$forceUpdate();
+                });
+            },
+            goToDir: function(dirName){
+                this.goTo(this.base + dirName);
+            },
+            goToParent: function(){
+                this.goTo(this.parent);
+            },
+            start: function(){
+                this.goToDir(this.base);
+            }
+        }
+    });
+
+    app.start();
+    </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+local/
+[Bb]in/
+[Oo]bj/
+*.exe
+*.dll
+*.log
