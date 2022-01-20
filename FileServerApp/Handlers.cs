@@ -23,7 +23,7 @@ namespace FileServerApp
             bool goodPath = !(path.Contains("../") || path.Contains(":")); 
             if (goodPath) {
                 if (File.Exists(path)) {
-                    await context.Response.SendFileAsync(path);
+                    await context.Response.SendFileAttachmentAsync(path);
                 }
                 else {
                     var fsEntries = GetFsEntries(relPath);
@@ -80,6 +80,16 @@ namespace FileServerApp
         {
             context.ContentType = "application/json; charset=utf-8";
             await JsonSerializer.SerializeAsync(context.Body, obj, options);
+        }
+
+        static async Task SendFileAttachmentAsync (this HttpResponse response, string filepath) 
+        {
+            response.Headers.Append ("Content-Type", 
+                "application/octet-stream");
+            response.Headers.Append ("Content-Disposition",
+                $"attachment; filename=\"{Path.GetFileName(filepath)}\"");
+            
+            await response.SendFileAsync(filepath);
         }
     }
 }
