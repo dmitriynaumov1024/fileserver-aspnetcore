@@ -13,62 +13,33 @@ namespace FileServerApp
 {
     public static class Handlers
     {
+        // Default request handler - sends index.html to client
         public static async Task DefaultGet (HttpContext context) {
             await context.Response.SendFileAsync("index.html");
         }
 
         public static async Task FileServer (HttpContext context) {
-            string relPath = (string)context.Request.Query["path"] ?? "/";
-            string path = "./wwwroot/" + relPath;
-            bool goodPath = !(path.Contains("../") || path.Contains(":")); 
+            string rootPath = "./wwwroot/";
+            // Get path from current http request
+            string relPath = (string)context.Request.Query["path"] ?? String.Empty;
+            // Get full path (with root path substitution)
+            string path = rootPath + relPath;
+            // Escaping the wwwroot directory can reveal sensitive information.
+            bool goodPath = !(path.Contains("../") || path.Contains(":"));
             if (goodPath) {
+                // If path represents a file - send it as attachment
                 if (File.Exists(path)) {
                     await context.Response.SendFileAttachmentAsync(path);
                 }
-                else {
-                    var fsEntries = GetFsEntries(relPath);
+                // If path represents a directory - send information about its contents
+                else if (Directory.Exists(path)) {
+                    var fsEntries = FsExtensions.GetFsEntries(relPath, rootPath);
                     await context.Response.WriteAsJsonAsync(fsEntries);
                 }
             }
+            // Fallback
             else {
-                await context.Response.SendFileAsync("index.html");
-            }
-        }
-
-        static Dictionary<string, object> GetFsEntries (string relPath) {
-            string path = "./wwwroot" + relPath;
-            IEnumerable<string> subdirs = null, files = null;
-            var basedir = new DirectoryInfo(path);
-            var rootdir = new DirectoryInfo("./wwwroot");
-            string parent = "";
-
-            if (basedir.Exists) {
-                // Get subdirs and files
-                subdirs = basedir.GetDirectories().Select(item => item.Name);
-                files = basedir.GetFiles().Select(item => item.Name);
-                parent = GetRelativePath(basedir.Parent, rootdir);
-            }
-            
-            // Make a string:string dictionary
-            var resultDict = new Dictionary<string, object> {
-                { "base", relPath.EndsWith('/') ? relPath : relPath + '/' },
-                { "parent", parent },
-                { "dirs", subdirs ?? new string[0] },
-                { "files", files ?? new string[0] }
-            }; 
-
-            return resultDict;
-        }
-
-        static string GetRelativePath (DirectoryInfo directory, DirectoryInfo root)
-        {
-            string rootPath = root.FullName.Replace('\\', '/');
-            string dirPath = directory.FullName.Replace('\\', '/');
-            if (rootPath.Length > dirPath.Length) {
-                return "";
-            }
-            else {
-                return dirPath.Replace(rootPath, "");
+                await DefaultGet(context);
             }
         }
     }
