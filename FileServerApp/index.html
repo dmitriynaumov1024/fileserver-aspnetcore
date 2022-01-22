@@ -51,10 +51,6 @@
         transition-duration: 0.3s;
     }
 
-    .item-dir:hover, .item-file:hover {
-        background-color: #d5e0fe;
-    }
-
     @media screen and (min-width: 4.50in) {
         body>main {
             width: max(4.40in, 60%);
@@ -64,6 +60,10 @@
             border-radius: 8px;
             box-shadow: 0 0 10px 1px rgb(100 100 100 / 20%);
             background-color: #fefefe;
+        }
+        
+        .item-dir:hover, .item-file:hover {
+            background-color: #d5e0fe;
         }
     }
 
@@ -97,8 +97,16 @@
         </ul>
     </main>
     <script type="text/javascript">
+    // Default http fail handler
+    function defaultFail (http) {
+        console.warn("Request failed:");
+        console.warn("URL: " + http.responseURL);
+        console.warn("Status: " + http.status);
+        console.log(http.response);
+    }
+
     // Boilerplate
-    function beginHttpGet (url, success, fail = null) {
+    function beginHttpGet (url, success, fail = defaultFail) {
         var http = new XMLHttpRequest();
         http.open("GET", url);
         http.onreadystatechange = function() {
