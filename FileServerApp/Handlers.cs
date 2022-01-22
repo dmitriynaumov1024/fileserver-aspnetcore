@@ -71,25 +71,5 @@ namespace FileServerApp
                 return dirPath.Replace(rootPath, "");
             }
         }
-
-        static JsonSerializerOptions jsonOpts = new JsonSerializerOptions {
-            WriteIndented = true,
-        };
-
-        static async Task WriteAsJsonAsync<T> (this HttpResponse context, T obj, JsonSerializerOptions options = null) 
-        {
-            context.ContentType = "application/json; charset=utf-8";
-            await JsonSerializer.SerializeAsync(context.Body, obj, options);
-        }
-
-        static async Task SendFileAttachmentAsync (this HttpResponse response, string filepath) 
-        {
-            response.Headers.Append ("Content-Type", 
-                "application/octet-stream");
-            response.Headers.Append ("Content-Disposition",
-                $"attachment; filename=\"{Path.GetFileName(filepath)}\"");
-            
-            await response.SendFileAsync(filepath);
-        }
     }
 }
