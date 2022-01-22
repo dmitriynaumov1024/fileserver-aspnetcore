@@ -126,17 +126,14 @@
         methods: {
             goTo: function(dirName){
                 var url = this.dirUrlPrefix + dirName;
-                console.log(url);
                 var capturedThis = this;
                 beginHttpGet(url, function(http){
                     var response = (http.responseType == "json") ? 
                         http.response : JSON.parse(http.response);
-                    console.log(response);
                     capturedThis.base = response["base"];
                     capturedThis.dirs = response["dirs"];
                     capturedThis.files = response["files"];
                     capturedThis.parent = response["parent"];
-                    capturedThis.$forceUpdate();
                 });
             },
             goToDir: function(dirName){
