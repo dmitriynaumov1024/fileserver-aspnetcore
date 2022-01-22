@@ -38,7 +38,7 @@ Idk, just open a pull request...
 ```
 {
   "name": "Dmitriy Naumov",
-  "last-contribution-date": "2022-01-19",
+  "last-contribution-date": "2022-01-22",
   "github": "https://github.com/dmitriynaumov1024",
   "email": "naumov1024@gmail.com"
 }
