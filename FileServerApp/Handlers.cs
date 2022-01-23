@@ -14,11 +14,14 @@ namespace FileServerApp
     public static class Handlers
     {
         // Default request handler - sends index.html to client
-        public static async Task DefaultGet (HttpContext context) {
+        public static async Task DefaultGet (HttpContext context) 
+        {
             await context.Response.SendFileAsync("index.html");
         }
 
-        public static async Task FileServer (HttpContext context) {
+        // File server
+        public static async Task FileServer (HttpContext context) 
+        {
             string rootPath = "./wwwroot/";
             // Get path from current http request
             string relPath = (string)context.Request.Query["path"] ?? String.Empty;
@@ -40,6 +43,26 @@ namespace FileServerApp
             // Fallback
             else {
                 await DefaultGet(context);
+            }
+        }
+
+        // Assets delivery
+        public static async Task AssetsDelivery (HttpContext context) 
+        {
+            string rootPath = "./assets";
+            // Get path from current http request
+            string relPath = (string)context.Request.Query["path"] ?? "/";
+            // Get full path (with root path substitution)
+            string path = rootPath + relPath;
+            // Escaping the root directory can reveal sensitive information.
+            bool goodPath = !(path.Contains("../") || path.Contains(":"));
+            // If path is safe and file exists, send the file
+            if (goodPath && File.Exists(path)) {
+                await context.Response.SendFileAssetAsync(path);
+            }
+            // Fallback
+            else {
+                await context.Response.NotFound();
             }
         }
     }

@@ -2,6 +2,7 @@ using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.StaticFiles;
 using System.IO;
 
 namespace FileServerApp
@@ -23,5 +24,21 @@ namespace FileServerApp
             
             await response.SendFileAsync(filepath);
         }
+
+        public static async Task SendFileAssetAsync (this HttpResponse response, string filepath) 
+        {
+            string contentType = "unknown/unknown";
+            Mime.TryGetContentType(filepath, out contentType);
+            response.Headers.Append ("Content-Type", contentType);
+            await response.SendFileAsync(filepath);
+        }
+
+        public static async Task NotFound (this HttpResponse response)
+        {
+            response.StatusCode = 404;
+            await response.WriteAsync("Error 404: File not found. :(");
+        }
+
+        static FileExtensionContentTypeProvider Mime = new FileExtensionContentTypeProvider();
     }
 }

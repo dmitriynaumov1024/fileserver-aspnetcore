@@ -29,6 +29,8 @@ namespace FileServerApp
             app.UseEndpoints (endpoints => {
                 // File server
                 endpoints.MapGet("/fs", Handlers.FileServer);
+                // Assets delivery
+                endpoints.MapGet("/assets", Handlers.AssetsDelivery);
             });
 
             app.Run (Handlers.DefaultGet);
