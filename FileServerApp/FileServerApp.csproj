@@ -5,8 +5,9 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="*.cs" Exclude="wwwroot/**/*.*" />
+    <Compile Include="./*.cs" />
     <Content Include="wwwroot/**/*.*" CopyToOutputDirectory="Always" />
+    <Content Include="assets/**/*.*" CopyToOutputDirectory="Always" />
     <Content Include="index.html" CopyToOutputDirectory="Always" />
   </ItemGroup>
 </Project>
