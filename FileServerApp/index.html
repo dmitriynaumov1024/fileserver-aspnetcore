@@ -87,12 +87,12 @@
                 <span class="item-dir" @click="goToParent()">..</span>
             </li>
             <li v-for="dir in dirs">
-                <span class="item-dir" @click="goToDir(dir)">{{dir}}</span>
+                <span class="item-dir" @click="goToDir(dir.Name)">{{dir.Name}}</span>
             </li>
         </ul>
         <ul>
             <li v-for="file in files">
-                <a :href="(dirUrlPrefix + base + file)" target="blank" class="item-file">{{file}}</a>
+                <a :href="(dirUrlPrefix + base + file.Name)" target="blank" class="item-file">{{file.Name}}</a>
             </li>
         </ul>
     </main>
@@ -138,10 +138,11 @@
                 beginHttpGet(url, function(http){
                     var response = (http.responseType == "json") ? 
                         http.response : JSON.parse(http.response);
-                    capturedThis.base = response["base"];
-                    capturedThis.dirs = response["dirs"];
-                    capturedThis.files = response["files"];
-                    capturedThis.parent = response["parent"];
+                    console.log(http.response);
+                    capturedThis.base = response["Base"];
+                    capturedThis.dirs = response["Dirs"];
+                    capturedThis.files = response["Files"];
+                    capturedThis.parent = response["Parent"];
                 });
             },
             goToDir: function(dirName){
