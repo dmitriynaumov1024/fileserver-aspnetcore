@@ -9,46 +9,65 @@
     <style>
     * {
         box-sizing: border-box;
-        font-family: monospace;
+        font-family: sans-serif;
     }
 
     body {
         margin: 0;
         padding: 0;
-        min-height: 100vh;
-        background-color: #fbfbfb;
-    }
-
-    html {
         display: flow-root;
+        min-height: 100vh;
+        background-color: #fcfcfc;
     }
 
     ul, ol {
         margin: 0;
-        padding-left: 1em;
+        padding: 0;
+        display: flow-root;
     }
 
     li {
         list-style-type: none;
+        display: flow-root;
     }
 
-    .item-dir {
-        font-weight: bold;
-        color: #4444ab;
-        cursor: pointer;
-    }
-
-    .item-file {
+    .item-dir, .item-file, 
+    .item-dir span, .item-file span,
+    .item-dir a, .item-file a {
         font-weight: normal;
-        color: #101010;
+        text-decoration: none;
     }
 
     .item-dir, .item-file {
-        text-decoration: none;
         padding: 4px 10px;
         border-radius: 4px;
-        display: block;
         transition-duration: 0.3s;
+        cursor: pointer;
+        user-select: none;
+    }
+
+
+    .item-dir img, .item-file img {
+        float: left; 
+        margin-right: 1em;
+    }
+
+    .item-name-text {
+        display: inline-block;
+        min-width: 80%;
+        font-size: 100%;
+        line-height: 160%;
+        font-weight: normal;
+        color: #111111;
+    }
+
+    .item-size-text, .item-lastmod-text {
+        display: inline-block;
+        min-width: 30%;
+        font-size: 75%;
+        text-decoration: none;
+        font-weight: normal;
+        color: #bebebe;
     }
 
     @media screen and (min-width: 4.50in) {
@@ -56,14 +75,16 @@
             width: max(4.40in, 60%);
             margin: 3em auto;
             padding: 2em;
-            border: 1px solid #dededf;
+            border: 1px solid #eeeeee;
             border-radius: 8px;
-            box-shadow: 0 0 10px 1px rgb(100 100 100 / 20%);
+            box-shadow: 0 0 10px 1px rgb(100 100 100 / 10%);
             background-color: #fefefe;
+            max-height: 85vh;
+            overflow-y: auto;
         }
         
         .item-dir:hover, .item-file:hover {
-            background-color: #d5e0fe;
+            background-color: #eef3fe;
         }
     }
 
@@ -76,6 +97,25 @@
             width: 100%;
             padding: 0.5em;
         }
+
+        .item-dir, .item-file {
+            padding: 4px 4px;
+            border-radius: 0;
+            border-top: 1px solid #dedede;
+        }
+
+        .item-name-text {
+            line-height: 120%;
+        }
+
+        .item-size-text, .item-lastmod-text {
+            min-width: 25%;
+        }
+
+        .item-dir img, .item-file img {
+            width: 1em;
+            margin-right: 2px;
+        }
     }
     </style>
 </head>
@@ -83,16 +123,26 @@
     <main id="main">
         <p>Base: {{base}}</p>
         <ul>
-            <li>
-                <span class="item-dir" @click="goToParent()">..</span>
+            <li class="item-dir" @click="goToParent()">
+                <img src="/assets?path=/img/icon-back.svg"/>
+                <span class="item-name-text">..</span>
+                <span class="item-size-text">Parent directory</span>
             </li>
-            <li v-for="dir in dirs">
-                <span class="item-dir" @click="goToDir(dir.Name)">{{dir.Name}}</span>
+            <li v-for="dir in dirs" class="item-dir" @click="goToDir(dir.Name)">
+                <img src="/assets?path=/img/icon-dir.svg"/>
+                <span class="item-name-text">{{dir.Name}}</span>
+                <br/>
+                <span class="item-size-text">Subdirectory</span>
+                <span class="item-lastmod-text">Last modified: {{dir.LastModified}}</span>
             </li>
-        </ul>
-        <ul>
-            <li v-for="file in files">
-                <a :href="(dirUrlPrefix + base + file.Name)" target="blank" class="item-file">{{file.Name}}</a>
+            <li v-for="file in files" class="item-file">
+                <a :href="(dirUrlPrefix + base + file.Name)" target="blank">
+                    <img src="/assets?path=/img/icon-file.svg"/>
+                    <span class="item-name-text">{{file.Name}}</span>
+                    <br/>
+                    <span class="item-size-text">Size: {{file.Size}} bytes</span>
+                    <span class="item-lastmod-text">Last modified: {{file.LastModified}}</span>
+                </a>
             </li>
         </ul>
     </main>
