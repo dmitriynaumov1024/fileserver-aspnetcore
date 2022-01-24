@@ -6,123 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Index</title>
     <script src="https://unpkg.com/vue"></script>
-    <style>
-    * {
-        box-sizing: border-box;
-        font-family: sans-serif;
-    }
-
-    body {
-        margin: 0;
-        padding: 0;
-        display: flow-root;
-        min-height: 100vh;
-        background-color: #fcfcfc;
-    }
-
-    ul, ol {
-        margin: 0;
-        padding: 0;
-        display: flow-root;
-    }
-
-    li {
-        list-style-type: none;
-        display: flow-root;
-    }
-
-    .item-dir, .item-file, 
-    .item-dir span, .item-file span,
-    .item-dir a, .item-file a {
-        font-weight: normal;
-        text-decoration: none;
-    }
-
-    .item-dir, .item-file {
-        padding: 4px 10px;
-        border-radius: 4px;
-        transition-duration: 0.3s;
-        cursor: pointer;
-        user-select: none;
-    }
-
-
-    .item-dir img, .item-file img {
-        float: left; 
-        margin-right: 1em;
-    }
-
-    .item-name-text {
-        display: inline-block;
-        min-width: 80%;
-        font-size: 100%;
-        line-height: 160%;
-        font-weight: normal;
-        color: #111111;
-    }
-
-    .item-size-text, .item-lastmod-text {
-        display: inline-block;
-        min-width: 30%;
-        font-size: 75%;
-        text-decoration: none;
-        font-weight: normal;
-        color: #bebebe;
-    }
-
-    @media screen and (min-width: 4.50in) {
-        body>main {
-            width: max(4.40in, 60%);
-            margin: 3em auto;
-            padding: 2em;
-            border: 1px solid #eeeeee;
-            border-radius: 8px;
-            box-shadow: 0 0 10px 1px rgb(100 100 100 / 10%);
-            background-color: #fefefe;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-        
-        .item-dir:hover, .item-file:hover {
-            background-color: #eef3fe;
-        }
-    }
-
-    @media screen and (max-width: 4.49in) {
-        body {
-            background-color: #fefefe;
-        }
-
-        body>main {
-            width: 100%;
-            padding: 0.5em;
-        }
-
-        .item-dir, .item-file {
-            padding: 4px 4px;
-            border-radius: 0;
-            border-top: 1px solid #dedede;
-        }
-
-        .item-name-text {
-            line-height: 120%;
-        }
-
-        .item-size-text, .item-lastmod-text {
-            min-width: 25%;
-        }
-
-        .item-dir img, .item-file img {
-            width: 1em;
-            margin-right: 2px;
-        }
-    }
-    </style>
+    <link rel="stylesheet" href="/assets?path=/css/style.css">
 </head>
 <body>
     <main id="main">
-        <p>Base: {{base}}</p>
-        <ul>
+        <span class="fs-titlebar">Current directory: {{base}}</span>
+        <ul class="fs-list">
             <li class="item-dir" @click="goToParent()">
                 <img src="/assets?path=/img/icon-back.svg"/>
                 <span class="item-name-text">..</span>
@@ -133,15 +22,15 @@
                 <span class="item-name-text">{{dir.Name}}</span>
                 <br/>
                 <span class="item-size-text">Subdirectory</span>
-                <span class="item-lastmod-text">Last modified: {{dir.LastModified}}</span>
+                <span class="item-lastmod-text">Last mod.: {{dir.LastModified}}</span>
             </li>
             <li v-for="file in files" class="item-file">
                 <a :href="(dirUrlPrefix + base + file.Name)" target="blank">
                     <img src="/assets?path=/img/icon-file.svg"/>
                     <span class="item-name-text">{{file.Name}}</span>
                     <br/>
-                    <span class="item-size-text">Size: {{file.Size}} bytes</span>
-                    <span class="item-lastmod-text">Last modified: {{file.LastModified}}</span>
+                    <span class="item-size-text">{{file.Size}} bytes</span>
+                    <span class="item-lastmod-text">Last mod.: {{file.LastModified}}</span>
                 </a>
             </li>
         </ul>
