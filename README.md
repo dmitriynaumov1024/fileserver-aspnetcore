@@ -20,9 +20,19 @@ File Program.cs is used to initialize the web host builder and build the applica
 File Startup.cs is used to configure the application on startup.
 
 File Handlers.cs contains 3 request delegates:
-- DefaultGet - default fallback delegate, sends index.html to client.
-- FileServer - sends a file or directory info depending on request path.
-- AssetsDelivery - sends an asset file (css, icons, ...) to client.
+- `DefaultGet` - default fallback delegate, sends index.html to client.
+- `FileServer` - sends a file or directory info depending on request path.
+- `AssetsDelivery` - sends an asset file (css, icons, ...) to client.
+
+Files FsFileEntry.cs and FsDirectoryEntry contain classes with minimum necessary fields representing files and directories respectively.
+
+File FsExtensions.cs contains some imperative code to get file system entries of current directory; and auxiliary methods to get relative path and to make FsFileEntry and FsDirectoryEntry objects from standard FileInfo and DirectoryInfo objects.
+
+File HttpResponseExtensions.cs contains extension methods:
+- `WriteAsJsonAsync<T>` - to send an object as JSON to given HTTP response.
+- `SendFileAttachmentAsync` - to send a file as attachment (file should be saved).
+- `SendFileAssetAsync` - to deliver an asset file (css, icon, ...).
+- `NotFound` - to send a standard 404 response.
 
 File index.html is the only frontend page.
 
