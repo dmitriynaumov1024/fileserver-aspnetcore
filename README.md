@@ -19,11 +19,12 @@ File Program.cs is used to initialize the web host builder and build the applica
 
 File Startup.cs is used to configure the application on startup.
 
-File Handlers.cs contains 2 request delegates:
-- DefaultGet - default fallback delegate, sends index.html to client
+File Handlers.cs contains 3 request delegates:
+- DefaultGet - default fallback delegate, sends index.html to client.
 - FileServer - sends a file or directory info depending on request path.
+- AssetsDelivery - sends an asset file (css, icons, ...) to client.
 
-File index.html is the only frontend file. It contains all necessary markup, styles and script. 
+File index.html is the only frontend page.
 
 ## License 
 
@@ -35,10 +36,10 @@ Idk, just open a pull request...
 
 ## Authors
 
-```
+```json
 {
   "name": "Dmitriy Naumov",
-  "last-contribution-date": "2022-01-22",
+  "last-contribution-date": "2022-01-24",
   "github": "https://github.com/dmitriynaumov1024",
   "email": "naumov1024@gmail.com"
 }
