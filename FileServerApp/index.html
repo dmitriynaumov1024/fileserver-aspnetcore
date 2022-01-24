@@ -29,13 +29,20 @@
                     <img src="/assets?path=/img/icon-file.svg"/>
                     <span class="item-name-text">{{file.Name}}</span>
                     <br/>
-                    <span class="item-size-text">{{file.Size}} bytes</span>
+                    <span class="item-size-text">{{toConvenient(file.Size)}}</span>
                     <span class="item-lastmod-text">Last mod.: {{file.LastModified}}</span>
                 </a>
             </li>
         </ul>
     </main>
     <script type="text/javascript">
+    var sizeToNotationMapping = [
+        { size: 0, notation: "bytes" }, 
+        { size: 1000, notation: "Kb" }, 
+        { size: 1000000, notation: "Mb" },
+        { size: 1000000000, notation: "Gb" }
+    ];
+
     // Default http fail handler
     function defaultFail (http) {
         console.warn("Request failed:");
@@ -92,6 +99,10 @@
             },
             start: function(){
                 this.goToDir(this.base);
+            },
+            toConvenient: function(givenBytes) {
+                var currentNotation = sizeToNotationMapping.findLast(item => item.size < givenBytes);
+                return ((currentNotation.size == 0) ? givenBytes.toString() : (givenBytes / currentNotation.size).toFixed(2)) + " " + currentNotation.notation;
             }
         }
     });
