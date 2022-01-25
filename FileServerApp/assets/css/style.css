@@ -61,7 +61,6 @@ li {
 
 .fs-titlebar {
     display: block;
-    margin-bottom: 1em;
 }
 
 .button-back {
@@ -101,6 +100,10 @@ li {
         max-height: 85vh;
         overflow-y: auto;
     }
+
+    .fs-titlebar {
+        margin-bottom: 1em;
+    }
     
     .fs-list {
         height: 70vh;
@@ -124,7 +127,7 @@ li {
 
     body>main {
         width: 100%;
-        padding: 0.5em;
+        padding: 0em 0.5em 0.5em;
     }
 
     .item-dir, .item-file {
@@ -138,5 +141,14 @@ li {
         margin-right: 4px;
         margin-top: 0.25em;
         margin-bottom: 0.75em;
+    }
+
+    .fs-titlebar {
+        position: sticky;
+        top: 0;
+        padding: 0.5em 0em 0.25em;
+        margin-bottom: 0.5em;
+        box-shadow: 0 6px 5px #fefefe;
+        background-color: #fefefe;
     }
 }
