@@ -4,9 +4,10 @@
     <meta charset="utf-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Index</title>
+    <title>File server</title>
     <script src="https://unpkg.com/vue"></script>
     <link rel="stylesheet" href="/assets?path=/css/style.css">
+    <link rel="icon" href="/assets?path=/img/favicon.svg">
 </head>
 <body>
     <main id="main">
@@ -24,7 +25,7 @@
             </li>
             <li v-for="file in files" class="item-file">
                 <a :href="(dirUrlPrefix + base + file.Name)" target="blank">
-                    <img src="/assets?path=/img/icon-file.svg"/>
+                    <img src="/assets?path=/img/icon-file2.svg"/>
                     <span class="item-name-text">{{file.Name}}</span>
                     <br/>
                     <span class="item-size-text">{{toConvenient(file.Size)}}</span>
