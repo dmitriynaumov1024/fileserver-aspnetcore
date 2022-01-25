@@ -64,11 +64,36 @@ li {
     margin-bottom: 1em;
 }
 
+.button-back {
+    display: inline-block;
+    float: left;
+    height: 2em;
+    margin: 0;
+    margin-right: 0.5em;
+    cursor: pointer;
+}
+
+.fs-path {
+    display: block;
+    height: 2em;
+    padding: 0.5em;
+    margin: 0;
+    margin-left: 0.5em;
+    font-size: 100%;
+    line-height: 100%;
+    overflow: hidden;
+}
+
+.button-back, .fs-path {
+    background-color: #dedede;
+    border-radius: 4px;
+}
+
 @media screen and (min-width: 4.50in) {
     body>main {
         width: max(4.40in, 60%);
         margin: 3em auto;
-        padding: 1em 2em;
+        padding: 1.5em;
         border: 1px solid #eeeeee;
         border-radius: 8px;
         box-shadow: 0 0 10px 1px rgb(100 100 100 / 10%);

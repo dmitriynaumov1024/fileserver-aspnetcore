@@ -10,13 +10,11 @@
 </head>
 <body>
     <main id="main">
-        <span class="fs-titlebar">Current directory: {{base}}</span>
+        <div class="fs-titlebar">  
+            <img src="/assets?path=/img/icon-back.svg" class="button-back" @click="goToParent()" />
+            <span class="fs-path">{{base}}</span>
+        </div>
         <ul class="fs-list">
-            <li class="item-dir" @click="goToParent()">
-                <img src="/assets?path=/img/icon-back.svg"/>
-                <span class="item-name-text">..</span>
-                <span class="item-size-text">Parent directory</span>
-            </li>
             <li v-for="dir in dirs" class="item-dir" @click="goToDir(dir.Name)">
                 <img src="/assets?path=/img/icon-dir.svg"/>
                 <span class="item-name-text">{{dir.Name}}</span>
