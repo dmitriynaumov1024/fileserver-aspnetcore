@@ -34,79 +34,10 @@
             </li>
         </ul>
     </main>
-    <script type="text/javascript">
-    var sizeToNotationMapping = [
-        { size: 0, notation: "bytes" }, 
-        { size: 1000, notation: "Kb" }, 
-        { size: 1000000, notation: "Mb" },
-        { size: 1000000000, notation: "Gb" }
-    ];
-
-    // Default http fail handler
-    function defaultFail (http) {
-        console.warn("Request failed:");
-        console.warn("URL: " + http.responseURL);
-        console.warn("Status: " + http.status);
-        console.log(http.response);
-    }
-
-    // Boilerplate
-    function beginHttpGet (url, success, fail = defaultFail) {
-        var http = new XMLHttpRequest();
-        http.open("GET", url);
-        http.onreadystatechange = function() {
-            if (http.readyState == XMLHttpRequest.DONE) {
-                if (http.status >= 200 && http.status < 300) {
-                    success(http);
-                }
-                else {
-                    fail(http);
-                }
-            }
-        };
-        http.send();
-    }
-
-    var app = new Vue({
-        el: "#main",
-        data: {
-            dirUrlPrefix: "/fs?path=",
-            parent: "",
-            base: "",
-            dirs: [],
-            files: []
-        },
-        methods: {
-            goTo: function(dirName){
-                var url = this.dirUrlPrefix + dirName;
-                var capturedThis = this;
-                beginHttpGet(url, function(http){
-                    var response = (http.responseType == "json") ? 
-                        http.response : JSON.parse(http.response);
-                    console.log(http.response);
-                    capturedThis.base = response["Base"];
-                    capturedThis.dirs = response["Dirs"];
-                    capturedThis.files = response["Files"];
-                    capturedThis.parent = response["Parent"];
-                });
-            },
-            goToDir: function(dirName){
-                this.goTo(this.base + dirName);
-            },
-            goToParent: function(){
-                this.goTo(this.parent);
-            },
-            start: function(){
-                this.goToDir(this.base);
-            },
-            toConvenient: function(givenBytes) {
-                var currentNotation = sizeToNotationMapping.findLast(item => item.size < givenBytes);
-                return ((currentNotation.size == 0) ? givenBytes.toString() : (givenBytes / currentNotation.size).toFixed(2)) + " " + currentNotation.notation;
-            }
-        }
-    });
-
-    app.start();
+    <script>
+        // Value is to be set by preprocessor
+        var DIR_URL_PREFIX = "/fs?path=@@@dirUrlPrefix";
     </script>
+    <script src="/assets?path=/js/index.js"></script>
 </body>
 </html>
