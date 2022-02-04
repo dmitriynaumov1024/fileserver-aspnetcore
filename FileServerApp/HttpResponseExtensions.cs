@@ -31,6 +31,7 @@ namespace FileServerApp
             string contentType = "unknown/unknown";
             Mime.TryGetContentType(filepath, out contentType);
             response.Headers.Append ("Content-Type", contentType);
+            response.Headers.Append ("Cache-Control", "public, max-age=100000000");
             await response.SendFileAsync(filepath);
         }
 
