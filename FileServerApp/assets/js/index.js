@@ -37,17 +37,18 @@ function beginHttpGet ({url, headers={}, success, fail=defaultFail}) {
 var app = new Vue({
     el: "#main",
     data: {
-        dirUrlPrefix: DIR_URL_PREFIX,
+        dirUrlPrefix: "/fs?path=",
         parent: "",
-        base: "",
+        base: DIR_BASE,
         dirs: [],
         files: []
     },
     methods: {
         goTo: function(dirName){
             var capturedThis = this;
+            var currentUrl = this.dirUrlPrefix + dirName;
             beginHttpGet({
-                url: this.dirUrlPrefix + dirName, 
+                url: currentUrl, 
                 headers: {
                     "JSON-Only": "true"
                 },
@@ -59,6 +60,8 @@ var app = new Vue({
                     capturedThis.dirs = response["Dirs"];
                     capturedThis.files = response["Files"];
                     capturedThis.parent = response["Parent"];
+                    document.title = SITE_NAME + ": " + dirName;
+                    history.pushState(null, document.title, currentUrl);
                 }
             });
         },
@@ -69,7 +72,7 @@ var app = new Vue({
             this.goTo(this.parent);
         },
         start: function(){
-            this.goToDir(this.base);
+            this.goToDir("");
         },
         toConvenient: function(givenBytes) {
             var currentNotation = sizeToNotationMapping.findLast(item => item.size < givenBytes);

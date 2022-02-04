@@ -55,9 +55,7 @@ namespace FileServerApp
                         await context.Response.WriteAsJsonAsync(fsEntries);
                     }
                     else {
-                        var replacements = new Dictionary<string, object> {
-                            { "dirUrlPrefix", relPath }
-                        };
+                        var replacements = new Dictionary<string, object> {{ "dirBase", relPath }};
                         await context.Response.SendPreprocessedHtmlAsync("index.html", replacements);
                     }
                 }
@@ -81,7 +79,7 @@ namespace FileServerApp
 
         static string PreprocessedIndexPage = HtmlPreprocessHelper.GetPreprocessedHtml (
             "index.html", 
-            new Dictionary<string, object>{{"dirUrlPrefix", ""}}
+            new Dictionary<string, object>{{"dirBase", ""}}
         );
     }
 }
