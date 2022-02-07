@@ -49,7 +49,7 @@ Idk, just open a pull request...
 ```json
 {
   "name": "Dmitriy Naumov",
-  "last-contribution-date": "2022-02-04",
+  "last-contribution-date": "2022-02-07",
   "github": "https://github.com/dmitriynaumov1024",
   "email": "naumov1024@gmail.com"
 }
