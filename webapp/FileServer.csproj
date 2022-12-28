@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>FileServer</RootNamespace>
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="assets/**/*.*" Exclude="assets/**/_*.*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

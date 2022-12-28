@@ -1,0 +1,190 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flow-root;
+    font-family: "Nimbus Sans", "Helvetica", system-ui, sans-serif;
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+ul, ol {
+    margin: 0;
+    padding: 0;
+    display: flow-root;
+}
+
+li {
+    list-style-type: none;
+    display: flow-root;
+}
+
+.width-container {
+    width: 100%;
+    margin: auto;
+}
+
+.pad-05 {
+    padding: 8px; 
+}
+
+.pad-1 {
+    padding: 16px;
+}
+
+.pad-15 {
+    padding: 24px;
+}
+
+.pad-2 {
+    padding: 32px;
+}
+
+.margin-bottom-1.margin-bottom-1 {
+    margin-bottom: 16px;
+}
+
+.margin-bottom-2.margin-bottom-2 {
+    margin-bottom: 32px;
+}
+
+.text-small {
+    font-size: 80%;
+}
+
+.text-gray {
+    color: #a9aaab;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.item-file {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.item-file>:nth-child(1) {
+    flex-grow: 1;
+}
+
+.item-dir, .item-file, 
+.item-dir span, .item-file span,
+.item-dir a, .item-file a {
+    font-weight: normal;
+    text-decoration: none;
+}
+
+.item-dir, .item-file {
+    cursor: pointer;
+    user-select: none;
+    padding: 5px 4px 3px;
+    border-radius: 0;
+    border-top: 1px solid #e8e9eb;
+}
+
+.item-dir img, .item-file img {
+    width: 28px;
+    margin-top: 3px;
+    margin-bottom: 7px;
+}
+
+.item-dir img:not(:last-child), 
+.item-file img:not(:last-child) {
+    float: left;
+    margin-right: 4px;
+}
+
+.item-name-text {
+    display: inline-block;
+    margin-top: 2px;
+    min-width: 80%;
+    font-size: 100%;
+    font-weight: normal;
+}
+
+.item-size-text, .item-lastmod-text {
+    display: inline-block;
+    min-width: 120px;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+.breadcrumbs {
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-bottom: 12px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e8e9eb;
+}
+
+@media screen and (min-width: 500px) {
+    .width-container {
+        width: 480px;
+    }
+}
+
+@media screen and (min-width: 740px) {
+    .width-container {
+        width: 640px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .width-container {
+        width: 800px;
+    }
+}
+
+@media screen and (min-width: 2000px) {
+    .width-container {
+        width: 1280px;
+    }
+}
+
+.breadcrumb {
+    text-decoration: none;
+    padding: 3px 4px 2px 1px;
+}
+
+.breadcrumb:hover {
+    text-decoration: underline;
+    background-color: rgba(190, 210, 255, 0.2);
+}
+
+@media screen and (min-width: 4.50in) {
+
+    body>main.card {
+        width: max(4.40in, 60%);
+        margin: 2em auto 0;
+        border: 1px solid #eeeeee;
+        border-radius: 8px;
+        box-shadow: 0 5px 20px 1px rgba(100, 100, 100, 0.08);
+        background-color: #ffffff;
+        overflow: hidden;
+    }
+
+    .item-name-text {
+        margin-top: 5px;
+    }    
+
+    .item-dir img, .item-file img {
+        width: 50px;
+        margin-top: 0px;
+        margin-bottom: 5px;
+    }
+
+    .item-dir img:not(:last-child), 
+    .item-file img:not(:last-child) {
+        margin-right: 16px;
+    }
+}
