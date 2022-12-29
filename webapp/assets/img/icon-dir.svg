@@ -1,5 +1,5 @@
 <svg viewBox="0 0 50 50" width="50" height="50" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <g stroke-width="2" stroke="#767676" fill="#767676">
-        <path d="M 5 13 L 5 37 Q 5 40 8 40 L 42 40 Q 45 40 45 37 L 45 16 Q 45 13 42 13 L 23 13 Q 21 13 20 12 Q 19 10 17 10 L 8 10 Q 5 10 5 13 Z" />
+        <path d="M 5 12 L 5 36 Q 5 39 8 39 L 42 39 Q 45 39 45 36 L 45 15 Q 45 12 42 12 L 23 12 Q 21 12 20 11 Q 19 11 17 9 L 8 9 Q 5 9 5 12 Z" />
     </g>
 </svg>
