@@ -52,7 +52,7 @@ public class HtmlPresentation : IFileServerPresentation
         }
 
         // to set up a parent directory link
-        if (breadcrumbs.Length > 1) {
+        if (pathParts.Length > 0) {
             dirsFormatted.Insert(0, String.Format(DirectoryWidget, 
                 breadcrumbs[breadcrumbs.Length - 1].link,
                 "..",
