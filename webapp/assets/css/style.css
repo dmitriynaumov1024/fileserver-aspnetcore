@@ -53,6 +53,14 @@ li {
     }
 }
 
+a {
+    color: #2343e0;
+}
+
+a:visited {
+    color: #2343e0;
+}
+
 .pad-05 {
     padding: 8px; 
 }
@@ -103,7 +111,7 @@ li {
 .item-dir, .item-file {
     cursor: pointer;
     user-select: none;
-    padding: 2px 4px 1px;
+    padding: 1px 2px 2px;
     border-radius: 0;
     border-top: 1px solid #e8e9eb;
 }
@@ -164,6 +172,10 @@ li {
         box-shadow: 0 5px 20px 1px rgba(100, 100, 100, 0.08);
         background-color: #ffffff;
         overflow: hidden;
+    }
+
+    .item-dir, .item-file {
+        padding: 2px 4px 1px;
     }
 
     .item-name-text {
