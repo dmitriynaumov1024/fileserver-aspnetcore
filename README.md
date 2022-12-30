@@ -8,13 +8,13 @@ This variant of server is to work without any front-end framework and to be cust
 
 Why this file server? Why once again? Because this one:
 
+- has front-end without any single line of javascript, looks neat on both mobile and desktop:
+
+![screenshots-both.png](./science/screenshots-both.png)
+
 - has much more understandable request pipeline:
 
 ![pipeline.png](./science/pipeline.png)
-
-- front-end without any single line of javascript, looks neat on both mobile and desktop:
-
-![screenshots-both.png](./science/screenshots-both.png)
 
 - is easily customizable, even though it's pretty solid, you may want to adapt it for your needs.
 
