@@ -12,13 +12,9 @@ Why this file server? Why once again? Because this one:
 
 ![pipeline.png](./science/pipeline.png)
 
-- has nice front-end without any single line javascript:
+- front-end without any single line of javascript, looks neat on both mobile and desktop:
 
-![screenshot-mobile.png](./science/screenshot-mobile.png)
-
-- looks neat on both mobile and desktop:
-
-![screenshot-desktop.png](./science/screenshot-desktop.png)
+![screenshots-both.png](./science/screenshots-both.png)
 
 - is easily customizable, even though it's pretty solid, you may want to adapt it for your needs.
 
