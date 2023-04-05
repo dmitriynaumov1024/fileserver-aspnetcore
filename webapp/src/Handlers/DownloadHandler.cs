@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Http;
 
 public class DownloadHandler : FsHandler
@@ -19,7 +20,7 @@ public class DownloadHandler : FsHandler
     {
         try {
             context.Response.Headers.Append ("Content-Type", "application/octet-stream");
-            context.Response.Headers.Append ("Content-Disposition", $"attachment; filename=\"{Path.GetFileName(path)}\"");
+            context.Response.Headers.Append ("Content-Disposition", $"attachment; filename*=UTF-8''{Uri.EscapeDataString(Path.GetFileName(path))}");
             await context.Response.SendFileAsync(path);
         }
         catch (FileNotFoundException) {

@@ -25,7 +25,7 @@ public class HtmlPresentation : IFileServerPresentation
         var dirsFormatted = dir.EnumerateDirectories()
             .OrderBy(dir => dir.Name)
             .Select(dir => String.Format (DirectoryWidget, 
-                Path.Combine("/fs"+context.Request.Path, dir.Name), 
+                Path.Combine("/fs"+context.Request.Path, dir.Name.Replace("#","%23")), 
                 dir.Name, 
                 dir.LastWriteTimeUtc
             )).ToList();
@@ -33,8 +33,8 @@ public class HtmlPresentation : IFileServerPresentation
         var filesFormatted = dir.EnumerateFiles()
             .OrderBy(file => file.Name)
             .Select(file => String.Format(FileWidget,
-                Path.Combine("/fs"+context.Request.Path, file.Name), 
-                Path.Combine("/download"+context.Request.Path, file.Name), 
+                Path.Combine("/fs"+context.Request.Path, file.Name.Replace("#","%23")), 
+                Path.Combine("/download"+context.Request.Path, file.Name.Replace("#","%23")), 
                 file.Name, 
                 this.FileSizeFormatter.Format("", file.Length, null), 
                 file.LastWriteTimeUtc

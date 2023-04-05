@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.StaticFiles;
 
@@ -25,8 +27,9 @@ public class FsHandler
 
     public virtual async Task Run (HttpContext context) 
     {
-        var path = (string)context.Request.Path;
-
+        string path = ((string)context.Request.Path).Replace("+","%2b");
+        path = HttpUtility.UrlDecode(path);
+        
         if (path.Length > 0 && path.StartsWith("/")) { 
             path = path.Substring(1);
         }
