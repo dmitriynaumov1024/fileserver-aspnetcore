@@ -27,8 +27,7 @@ public class FsHandler
 
     public virtual async Task Run (HttpContext context) 
     {
-        string path = ((string)context.Request.Path).Replace("+","%2b");
-        path = HttpUtility.UrlDecode(path);
+        var path = Uri.UnescapeDataString(context.Request.Path);
         
         if (path.Length > 0 && path.StartsWith("/")) { 
             path = path.Substring(1);
