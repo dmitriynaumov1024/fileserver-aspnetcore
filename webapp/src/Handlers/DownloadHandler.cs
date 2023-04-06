@@ -17,19 +17,21 @@ public class DownloadHandler : FsHandler
 
     public override async Task ServeFile (HttpContext context, string path)
     {
+        string requestPath = Uri.UnescapeDataString(context.Request.Path);
         try {
-            context.Response.Headers.Append ("Content-Type", "application/octet-stream");
-            context.Response.Headers.Append ("Content-Disposition", $"attachment; filename=\"{Path.GetFileName(path)}\"");
+            string filename = Uri.EscapeDataString(Path.GetFileName(path));
+            context.Response.Headers["Content-Type"] = "application/octet-stream";
+            context.Response.Headers["Content-Disposition"] = $"attachment; filename*=utf-8''{filename}";
             await context.Response.SendFileAsync(path);
         }
         catch (FileNotFoundException) {
             await Presentation.ServeNotFound(context, "Error 404: Not found", 
-                $"No file or directory was found at {context.Request.Path}");
+                $"No file or directory was found at {requestPath}");
         }
         catch (Exception ex) {
             Console.WriteLine(ex);
             await Presentation.ServeInternalError(context, "Error 500: Internal server error", 
-                $"Something in our server went wrong when you tried to download {context.Request.Path}");
+                $"Something went wrong while trying to download {requestPath}");
         }
     }
 }

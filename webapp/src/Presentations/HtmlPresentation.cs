@@ -17,6 +17,8 @@ public class HtmlPresentation : IFileServerPresentation
 
     public FileSizeFormatter FileSizeFormatter { get; set; } = new();
 
+    static string UriEscape (string text) => Uri.EscapeDataString(text);
+
     public async Task ServeDirectory (HttpContext context, DirectoryInfo dir)
     {
         context.Response.StatusCode = 200;
@@ -25,7 +27,7 @@ public class HtmlPresentation : IFileServerPresentation
         var dirsFormatted = dir.EnumerateDirectories()
             .OrderBy(dir => dir.Name)
             .Select(dir => String.Format (DirectoryWidget, 
-                Path.Combine("/fs"+context.Request.Path, dir.Name), 
+                Path.Join("/fs", context.Request.Path, UriEscape(dir.Name)), 
                 dir.Name, 
                 dir.LastWriteTimeUtc
             )).ToList();
@@ -33,8 +35,8 @@ public class HtmlPresentation : IFileServerPresentation
         var filesFormatted = dir.EnumerateFiles()
             .OrderBy(file => file.Name)
             .Select(file => String.Format(FileWidget,
-                Path.Combine("/fs"+context.Request.Path, file.Name), 
-                Path.Combine("/download"+context.Request.Path, file.Name), 
+                Path.Join("/fs", context.Request.Path, UriEscape(file.Name)), 
+                Path.Join("/download", context.Request.Path, UriEscape(file.Name)), 
                 file.Name, 
                 this.FileSizeFormatter.Format("", file.Length, null), 
                 file.LastWriteTimeUtc
@@ -48,7 +50,7 @@ public class HtmlPresentation : IFileServerPresentation
         breadcrumbs[0] = ("", "/fs/");
         for (int i=1; i<breadcrumbs.Length; i++) {
             var part = pathParts[i-1];
-            breadcrumbs[i] = (part, breadcrumbs[i-1].link + part + "/");
+            breadcrumbs[i] = (part, breadcrumbs[i-1].link + UriEscape(part) + "/");
         }
 
         // to set up a parent directory link

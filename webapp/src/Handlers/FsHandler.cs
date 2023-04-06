@@ -25,12 +25,12 @@ public class FsHandler
 
     public virtual async Task Run (HttpContext context) 
     {
-        var path = (string)context.Request.Path;
+        string path = Uri.UnescapeDataString((string)context.Request.Path);
 
         if (path.Length > 0 && path.StartsWith("/")) { 
             path = path.Substring(1);
         }
-        path = (string)Path.Combine(RootDir, path);
+        path = Path.Join(RootDir, path);
 
         if (ForbiddenSymbolsIn(context.Request.Path)) {
             await Presentation.ServeForbidden(context, "Error 403: Forbidden",
@@ -60,7 +60,7 @@ public class FsHandler
         catch (Exception ex) {
             Console.WriteLine(ex);
             await Presentation.ServeInternalError(context, "Error 500: Internal server error", 
-                $"Something in our server went wrong when you tried to access {context.Request.Path}");
+                $"Something went wrong while trying to access {context.Request.Path}");
         }
     }
 
@@ -70,7 +70,7 @@ public class FsHandler
             string contentType = "unknown/unknown";
             Mime.TryGetContentType(path, out contentType);
             context.Response.Headers.Append ("Content-Type", contentType);
-            context.Response.Headers.Append ("Cache-Control", "public, max-age=100000000");
+            context.Response.Headers.Append ("Cache-Control", "public, max-age=100000");
             await context.Response.SendFileAsync(path);
         }
         catch (FileNotFoundException) {
@@ -80,7 +80,7 @@ public class FsHandler
         catch (Exception ex) {
             Console.WriteLine(ex);
             await Presentation.ServeInternalError(context, "Error 500: Internal server error", 
-                $"Something in our server went wrong when you tried to access {context.Request.Path}");
+                $"Something went wrong while trying to access {context.Request.Path}");
         }
     }
 }

@@ -1,5 +1,7 @@
 # File server
 
+__Special thanks [@lriy816](https://github.com/lriy816) for finding a bug with non-ASCII characters!__
+
 Yet another version of file server by me.
 
 Old version with Vue 2 front-end is available on branch [v1](https://github.com/dmitriynaumov1024/fileserver-aspnetcore/tree/v1).
@@ -33,11 +35,18 @@ dotnet run -- <root-directory> <port>
 
 **Publish self-contained for Linux and run it**
 ```
-cd webapp
 dotnet publish --os linux --self-contained -p:PublishTrimmed=True -o ./dist
+./dist/FileServer <root-directory> <port>
+```
 
-cd dist
-./FileServer <root-directory> <port>
+**Manual minification of self-contained**
+```
+# this can save up to 5 megabytes
+rm ./dist/*Mvc*.dll
+rm ./dist/*Razor*.dll
+rm ./dist/*HttpSys*.dll
+rm ./dist/*IIS*.dll
+rm ./dist/*SignalR*.dll
 ```
 
 ## Web outline
@@ -49,4 +58,4 @@ cd dist
 ## Copyright notes
 
 - **.NET**: respecting original copyright, [more info here](https://dotnet.microsoft.com/)
-- **File server**: MIT License  &copy; 2022  Dmitriy Naumov  naumov1024@gmail.com
+- **File server**: MIT License  &copy; 2022 - 2023  Dmitriy Naumov  naumov1024@gmail.com
